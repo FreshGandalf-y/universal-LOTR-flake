@@ -1,5 +1,5 @@
 {
-  description = "multi-usabla flake for LOTR systems";
+  description = "multi-usable flake for LOTR systems";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
