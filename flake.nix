@@ -37,6 +37,11 @@
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
           }
+          #{
+          #  nixpkgs.config = {
+          #  problems.handlers = {
+          #  nss_wrapper.broken = "warn";
+          #};
         ] ++ extraModules;
       };
   in

@@ -7,8 +7,9 @@
     ./packages-casks.nix
   ];
 
+  modules.darwin.podman.enable = true;
+
   nix.enable = true;
-  nixpkgs.config.allowUnfree = true;
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
@@ -16,6 +17,25 @@
     enable = true;
     man.enable = true;
   };
+
+  nixpkgs.config = {
+    allowUnfree = true;
+    problems.handlers = {
+      nss_wrapper.broken = "warn"; # or "ignore"
+    };
+  };
+
+  #nixpkgs.overlays = [
+   # (final: prev: {
+    #  emacs = let
+     #   oldNixpkgs = import (fetchTarball {
+      #    url = "https://github.com/NixOS/nixpkgs/archive/<old-commit-hash>.tar.gz";
+       #   sha256 = "<sha256>";
+  #      }) { inherit (prev) system; };
+  #    in
+  #      oldNixpkgs.emacs;
+  #  })
+  #];
 
   environment.loginShellInit = ''
     export PATH="$HOME/.config/emacs/bin:$PATH"
