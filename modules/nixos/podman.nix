@@ -10,14 +10,17 @@
       enable = true;
       dockerSocket.enable = true;
       dockerCompat = true;
-      autoPrune = true;
+      autoPrune = {
+        enable = true;
+        dates = "weekly";
+      };
       networkSocket.enable = false;
       networkSocket.openFirewall = false;
     };
-  };
 
-  users.groups.docker.members =
-    builtins.attrNames (lib.filterAttrs
-      (_: u: builtins.elem "wheel" u.extraGroups)
-    config.users.users);
+    users.groups.docker.members =
+      builtins.attrNames (lib.filterAttrs
+        (_: u: builtins.elem "wheel" u.extraGroups)
+        config.users.users);
+  };
 }
