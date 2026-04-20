@@ -6,23 +6,25 @@
     nix-darwin.url = "github:nix-darwin/nix-darwin/master";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
 
+    wrapper-modules.url = "github:BirdeeHub/nix-wrapper-modules";
+
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { self, nixpkgs, home-manager, nix-darwin, ... }: 
+  outputs = { self, nixpkgs, home-manager, nix-darwin, ... }@inputs:
   let
     mkNixos = system: hostname: user: extraModules:
       nixpkgs.lib.nixosSystem {
         inherit system;
-        specialArgs = { inherit self; user = user; };
+        specialArgs = { inherit self inputs; user = user; };
         modules = [
           ./hosts/${hostname}/configuration.nix
           home-manager.nixosModules.home-manager
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
-            home-manager.extraSpecialArgs = { user = user; };
+            home-manager.extraSpecialArgs = { inherit inputs; user = user; };
             home-manager.users.${user} = import ./home/nixos.nix;
           }
         ] ++ extraModules;
@@ -38,7 +40,7 @@
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
-            home-manager.extraSpecialArgs = { user = user; };
+            home-manager.extraSpecialArgs = { inherit inputs; user = user; };
             home-manager.users.${user} = import ./home/darwin.nix;
           }
         ] ++ extraModules;
