@@ -2,7 +2,7 @@
   description = "multi-usable flake for LOTR systems";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     nix-darwin.url = "github:nix-darwin/nix-darwin/master";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
 
@@ -12,49 +12,48 @@
 
   outputs = { self, nixpkgs, home-manager, nix-darwin, ... }: 
   let
-    mkNixos = system: hostname: extraModules:
+    mkNixos = system: hostname: user: extraModules:
       nixpkgs.lib.nixosSystem {
         inherit system;
-        specialArgs = { inherit self; };
+        specialArgs = { inherit self; user = user; };
         modules = [
           ./hosts/${hostname}/configuration.nix
           home-manager.nixosModules.home-manager
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
+            home-manager.extraSpecialArgs = { user = user; };
+            home-manager.users.${user} = import ./home/nixos.nix;
           }
         ] ++ extraModules;
       };
 
-    mkDarwin = system: hostname: extraModules:
+    mkDarwin = system: hostname: user: extraModules:
       nix-darwin.lib.darwinSystem {
         inherit system;
-        specialArgs = { inherit self; };
+        specialArgs = { inherit self; user = user; };
         modules = [
           ./hosts/${hostname}/configuration.nix
           home-manager.darwinModules.home-manager
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
+            home-manager.extraSpecialArgs = { user = user; };
+            home-manager.users.${user} = import ./home/darwin.nix;
           }
-          #{
-          #  nixpkgs.config = {
-          #  problems.handlers = {
-          #  nss_wrapper.broken = "warn";
-          #};
         ] ++ extraModules;
       };
   in
   {
     # NixOS machines
     nixosConfigurations = {
-      Valinor = mkNixos "x86_64-linux" "Valinor" [];
-      server  = mkNixos "aarch64-linux" "server" [];
+      Valinor = mkNixos "x86_64-linux" "Valinor" "celebrimbor" [];
+      server  = mkNixos "x86_64-linux" "server" "" [];
     };
 
     # darwin machines
     darwinConfigurations = {
-      Middle-Earth = mkDarwin "aarch64-darwin" "Middle-Earth" [];
+      "Middle-Earth" = mkDarwin "aarch64-darwin" "Middle-Earth" "belalangner" [];
     };
   };
 }
