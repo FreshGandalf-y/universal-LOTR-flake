@@ -7,7 +7,10 @@
     ./packages-casks.nix
   ];
 
-  modules.darwin.podman.enable = true;
+  modules.darwin = {
+    aerospace.enable = true;
+    podman.enable = true;
+  };
 
   nix.enable = true;
 
@@ -20,22 +23,30 @@
 
   nixpkgs.config = {
     allowUnfree = true;
-    problems.handlers = {
-      nss_wrapper.broken = "warn"; # or "ignore"
-    };
+    #problems.handlers = {
+    #  nss_wrapper.broken = "warn"; # or "ignore"
+    #};
+    overlays = [
+      (final: prev: {
+        mailutils = prev.mailutils.override {
+          nss_wrapper = null;
+        };
+      })
+    ];
   };
 
-  #nixpkgs.overlays = [
-   # (final: prev: {
-    #  emacs = let
-     #   oldNixpkgs = import (fetchTarball {
-      #    url = "https://github.com/NixOS/nixpkgs/archive/<old-commit-hash>.tar.gz";
-       #   sha256 = "<sha256>";
-  #      }) { inherit (prev) system; };
-  #    in
-  #      oldNixpkgs.emacs;
-  #  })
-  #];
+  nixpkgs.overlays = [
+  (final: prev: {
+    devenv = prev.devenv.overrideAttrs (old: {
+      src = final.fetchFromGitHub {
+        owner = "cachix";
+        repo = "devenv";
+        rev = "v1.3.1";
+        sha256 = "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=";
+      };
+    });
+  })
+];
 
   environment.loginShellInit = ''
     export PATH="$HOME/.config/emacs/bin:$PATH"
