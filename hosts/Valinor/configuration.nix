@@ -1,10 +1,11 @@
-{ config, pkgs, self, ... }:
+  { config, pkgs, self, ... }:
 
 {
   imports = [
     ./hardware-configuration.nix
     ../../modules/nixos/default.nix
     ../../modules/common.nix
+    ../../modules/nixos/niri.nix
     ./packages-casks.nix
     ./users.nix
   ];
@@ -25,9 +26,6 @@
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
   services.xserver.enable = true;
-
-  # Hyprland
-  programs.hyprland.enable = true;
 
   # Gnome and gdm
   services.displayManager = {
@@ -87,7 +85,7 @@
   # programs.gnupg.agent = {
   #   enable = true;
   #   enableSSHSupport = true;
-  # };	
+  # };
 
   services.blueman.enable = true;
   hardware.bluetooth = {
