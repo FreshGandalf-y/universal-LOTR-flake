@@ -11,8 +11,12 @@
 
         #networking
         wireshark
+        postman
         htop
         btop
+
+        #virtual Mashines
+        utm
 
         #fetches
         fastfetch
@@ -41,7 +45,6 @@
         pnpm
 
         #development environment
-        devenv
         direnv
 
         #librarys
@@ -71,6 +74,7 @@
           #multimedia
           "kdenlive"
           "gimp"
+          "obs"
 
           #massenger
           "signal"
