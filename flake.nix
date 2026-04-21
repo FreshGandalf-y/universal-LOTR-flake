@@ -10,6 +10,8 @@
 
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    niri.url = "github:sodiboo/niri-flake";
+    niri.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = { self, nixpkgs, home-manager, nix-darwin, ... }@inputs:
@@ -21,6 +23,7 @@
         modules = [
           ./hosts/${hostname}/configuration.nix
           home-manager.nixosModules.home-manager
+          inputs.niri.nixosModules.niri
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;

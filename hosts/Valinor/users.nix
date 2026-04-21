@@ -13,8 +13,11 @@
 				fastfetch
 				hyfetch
 
-				#devenv
-				devenv
+        #terminal emulators 
+        alacritty
+
+				#devenv 
+        devenv
 
 				#Editor
 				emacs
@@ -32,6 +35,7 @@
   			sdbus-cpp
 				kdePackages.wayland-protocols
 				libxkbcommon
+        noctalia-shell
 
 				#gnu-stuff
 				coreutils
@@ -54,7 +58,7 @@
 				podman
 				podman-compose
 				podman-desktop
-			];			
+			];
 		};
 
 #		environment.shellInit = ''
@@ -103,7 +107,7 @@
 
 	system.activationScripts.niriSession = ''
 		mkdir -p /home/celebrimbor
-		echo -e "[Desktop]\nSession=hyprland" > /home/celebrimbor/.dmrc
+		echo -e "[Desktop]\nSession=niri" > /home/celebrimbor/.dmrc
 		chown celebrimbor:users /home/celebrimbor/.dmrc
 	'';
 

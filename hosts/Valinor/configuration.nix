@@ -5,7 +5,6 @@
     ./hardware-configuration.nix
     ../../modules/nixos/default.nix
     ../../modules/common.nix
-    ../../modules/nixos/niri.nix
     ./packages-casks.nix
     ./users.nix
   ];
@@ -27,12 +26,17 @@
 
   services.xserver.enable = true;
 
+  #niri
+  programs.niri.enable = true;
+
   # Gnome and gdm
   services.displayManager = {
 	  gdm.enable = true;
 	  gdm.wayland = true;
   };
   services.desktopManager.gnome.enable = true;
+  services.gnome.core-apps.enable = false;
+  services.gnome.core-developer-tools.enable = true;
 
   networking.networkmanager.enable = true;
 
