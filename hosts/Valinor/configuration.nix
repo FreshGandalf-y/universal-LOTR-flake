@@ -1,4 +1,4 @@
-{ config, pkgs, self, ... }:
+  { config, pkgs, self, ... }:
 
 {
   imports = [
@@ -26,8 +26,8 @@
 
   services.xserver.enable = true;
 
-  # Hyprland
-  programs.hyprland.enable = true;
+  #niri
+  programs.niri.enable = true;
 
   # Gnome and gdm
   services.displayManager = {
@@ -35,6 +35,8 @@
 	  gdm.wayland = true;
   };
   services.desktopManager.gnome.enable = true;
+  services.gnome.core-apps.enable = false;
+  services.gnome.core-developer-tools.enable = true;
 
   networking.networkmanager.enable = true;
 
@@ -87,7 +89,7 @@
   # programs.gnupg.agent = {
   #   enable = true;
   #   enableSSHSupport = true;
-  # };	
+  # };
 
   services.blueman.enable = true;
   hardware.bluetooth = {

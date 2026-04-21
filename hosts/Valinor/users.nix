@@ -13,8 +13,11 @@
 				fastfetch
 				hyfetch
 
-				#devenv
-				devenv
+        #terminal emulators 
+        alacritty
+
+				#devenv 
+        devenv
 
 				#Editor
 				emacs
@@ -27,28 +30,12 @@
 
 				alsa-scarlett-gui 
 
-				#hyprland
-				waybar
-				dunst
-				hyprpaper
-				hyprlock
-				hypridle
-				papirus-icon-theme
-				nautilus
-				starship
-				cairo
-				hyprgraphics
-				hyprlang
-				hyprutils
-				hyprwayland-scanner
-				mesa
-				pam
-				pango
-				sdbus-cpp
+			  #desktop
+  			papirus-icon-theme
+  			sdbus-cpp
 				kdePackages.wayland-protocols
 				libxkbcommon
-				gnomeExtensions.fly-pie
-				wofi
+        noctalia-shell
 
 				#gnu-stuff
 				coreutils
@@ -71,7 +58,7 @@
 				podman
 				podman-compose
 				podman-desktop
-			];			
+			];
 		};
 
 #		environment.shellInit = ''
@@ -100,16 +87,6 @@
 		nerd-fonts.jetbrains-mono
 		nerd-fonts.heavy-data
 	];
-
-	programs.git = {
-		enable = true;
-		config = {
-			user = {
-				name = "FreshGandalf-y";
-				email = "belajohanlangner@gmail.com";
-			};
-			init.defaultBranch = "main";
-		};	};
 	
 
 	programs.neovim = {
@@ -121,16 +98,16 @@
     pyright
     lua-language-server
     stylua
-    nodePackages.yaml-language-server
+    yaml-language-server
     gnumake
 
 		vimPlugins.nvim-treesitter.withAllGrammars
 
   ];
 
-	system.activationScripts.hyprlandSession = ''
+	system.activationScripts.niriSession = ''
 		mkdir -p /home/celebrimbor
-		echo -e "[Desktop]\nSession=hyprland" > /home/celebrimbor/.dmrc
+		echo -e "[Desktop]\nSession=niri" > /home/celebrimbor/.dmrc
 		chown celebrimbor:users /home/celebrimbor/.dmrc
 	'';
 
