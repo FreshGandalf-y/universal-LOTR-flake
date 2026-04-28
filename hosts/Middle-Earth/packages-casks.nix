@@ -18,13 +18,17 @@
         #virtual Mashines
         utm
 
+        #graphics
+        #blender # is broken
+        #inkscape # is broken
+
         #fetches
         fastfetch
         hyfetch
 
         #ditors 
         neovim
-  
+
         #Browsers
         firefox
 
@@ -45,7 +49,7 @@
         pnpm
 
         #development environment
-        direnv
+        #direnv # unkommented becouse broken, installed via homebrew
 
         #librarys
         libiconv
@@ -66,6 +70,10 @@
     brews = [
           #frameworks
           "vapor"
+
+          #dev-environment
+          "direnv"
+
         ];
         casks = [
           #editors
@@ -75,10 +83,12 @@
           "kdenlive"
           "gimp"
           "obs"
+          "inkscape"
 
           #massenger
           "signal"
           "element"
+
 
           #Terminal-Emulator
           "ghostty"
@@ -94,6 +104,9 @@
 
           #office
           "libreoffice"
+
+          #graphics
+          "blender"
 
           "obsidian"
     ];

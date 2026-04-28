@@ -24,6 +24,32 @@
           alt-3 = "workspace 3";
           alt-4 = "workspace 4";
 
+          #formbidden workspaces:
+          alt-5 = [];
+          alt-6 = [];
+          alt-7 = [];
+          alt-8 = [];
+          alt-9 = [];
+          alt-0 = [];
+          alt-a = [];
+          alt-c = [];
+          alt-d = [];
+          alt-i = [];
+          alt-m = [];
+          alt-n = [];
+          alt-o = [];
+          alt-p = [];
+          alt-q = [];
+          alt-r = [];
+          alt-s = [];
+          alt-t = [];
+          alt-u = [];
+          alt-v = [];
+          alt-w = [];
+          alt-x = [];
+          alt-y = [];
+          alt-z = [];
+
           #moving the windows
           alt-shift-h = "move left";
           alt-shift-j = "move down";
@@ -35,6 +61,7 @@
           alt-shift-3 = "move-node-to-workspace 3";
           alt-shift-4 = "move-node-to-workspace 4";
 
+          #open casks my command
           alt-g = "exec-and-forget open -a 'Ghostty'";
           alt-e = "exec-and-forget open -a 'Emacs'";
           alt-b = "exec-and-forget open -a 'Firefox'";

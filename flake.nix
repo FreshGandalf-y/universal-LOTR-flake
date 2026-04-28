@@ -8,9 +8,12 @@
 
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
+
+    devenv.url = "github:cachix/devenv";
+    devenv.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { self, nixpkgs, home-manager, nix-darwin, ... }: 
+  outputs = { self, nixpkgs, home-manager, nix-darwin, devenv, ... }:
   let
     mkNixos = system: hostname: user: extraModules:
       nixpkgs.lib.nixosSystem {
@@ -41,6 +44,7 @@
             home-manager.extraSpecialArgs = { user = user; };
             home-manager.users.${user} = import ./home/darwin.nix;
           }
+          #devenv.darwinModules.default # does not work yet?
         ] ++ extraModules;
       };
   in

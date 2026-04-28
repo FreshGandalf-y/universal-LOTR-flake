@@ -4,7 +4,11 @@
   # your dotfiles, shell config, etc.
   programs.git = {
     enable = true;
-    userName = "FreshGandalf-y";
-    userEmail = "belajohanlangner@gmail.com";
+    settings.user = {
+      init.defaultBranch = "main";
+
+      name = "FreshGandalf-y";
+      email = "belajohanlangner@gmail.com";
+    };
   };
 }
