@@ -9,6 +9,7 @@
     wrapper-modules.url = "github:BirdeeHub/nix-wrapper-modules";
 
     home-manager.url = "github:nix-community/home-manager";
+
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     niri.url = "github:sodiboo/niri-flake";
     niri.inputs.nixpkgs.follows = "nixpkgs";
@@ -52,7 +53,16 @@
   {
     # NixOS machines
     nixosConfigurations = {
-      Valinor = mkNixos "x86_64-linux" "Valinor" "celebrimbor" [];
+      Valinor = mkNixos "x86_64-linux" "Valinor" "celebrimbor" [
+           {
+             nixpkgs.config = {
+               allowUnfree = true;
+               permittedInsecurePackages = [
+                 "broadcom-sta-6.30.223.271-59-6.18.22"
+               ];
+             };
+           }
+      ];
       server  = mkNixos "x86_64-linux" "server" "" [];
     };
 

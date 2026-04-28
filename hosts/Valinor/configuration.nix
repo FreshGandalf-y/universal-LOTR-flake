@@ -1,4 +1,4 @@
-  { config, pkgs, self, ... }:
+{ config, pkgs, self, ... }:
 
 {
   imports = [
@@ -12,13 +12,27 @@
   modules.nixos.podman.enable = true;
 
   nix.enable = true;
-  nixpkgs.config.allowUnfree = true;
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  #nixpkgs.config = {
+  #  allowUnfree = true;
+  #  permittedInsecurePackages = [
+  #    "broadcom-sta-6.30.233.271-59-6.18.22"
+  #  ];
+  #};
+
+
+    nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  networking.hostName = "valinor";
+  hardware.enableRedistributableFirmware = true;
+  networking.enableB43Firmware = true;
+
+  boot.kernelModules = [ "wl" ];
+  boot.extraModulePackages = [ config.boot.kernelPackages.broadcom_sta];
+  boot.blacklistedKernelModules = [ "b43" "bcma" "ssb" "b43legacy" ];
+
+    networking.hostName = "valinor";
   # networking.wireless.enable = true;
 
   # networking.proxy.default = "http://user:password@proxy:port/";
@@ -39,14 +53,6 @@
   services.gnome.core-developer-tools.enable = true;
 
   networking.networkmanager.enable = true;
-
-  # Enabling Broadcom firmware blobs 
-  boot.kernelModules = ["wl" "broadcom_sta"];  
-
-  nixpkgs.config.permittedInsecurePackages = [
-	"broadcom-sta-6.30.223.271-59-6.12.64"
-  ];
-
   services.udisks2.enable = true;
 
   time.timeZone = "Europe/Berlin";

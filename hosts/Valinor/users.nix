@@ -37,6 +37,12 @@
 				libxkbcommon
         noctalia-shell
 
+        #files
+        nautilus
+
+        #store music
+        beets
+
 				#gnu-stuff
 				coreutils
 				ripgrep
