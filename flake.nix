@@ -6,26 +6,30 @@
     nix-darwin.url = "github:nix-darwin/nix-darwin/master";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
 
+    wrapper-modules.url = "github:BirdeeHub/nix-wrapper-modules";
+
     home-manager.url = "github:nix-community/home-manager";
+
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
-    devenv.url = "github:cachix/devenv";
-    devenv.inputs.nixpkgs.follows = "nixpkgs";
+    niri.url = "github:sodiboo/niri-flake";
+    niri.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { self, nixpkgs, home-manager, nix-darwin, devenv, ... }:
+  outputs = { self, nixpkgs, home-manager, nix-darwin, ... }@inputs:
   let
     mkNixos = system: hostname: user: extraModules:
       nixpkgs.lib.nixosSystem {
         inherit system;
-        specialArgs = { inherit self; user = user; };
+        specialArgs = { inherit self inputs; user = user; };
         modules = [
           ./hosts/${hostname}/configuration.nix
           home-manager.nixosModules.home-manager
+          inputs.niri.nixosModules.niri
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
-            home-manager.extraSpecialArgs = { user = user; };
+            home-manager.extraSpecialArgs = { inherit inputs; user = user; };
             home-manager.users.${user} = import ./home/nixos.nix;
           }
         ] ++ extraModules;
@@ -41,7 +45,7 @@
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
-            home-manager.extraSpecialArgs = { user = user; };
+            home-manager.extraSpecialArgs = { inherit inputs; user = user; };
             home-manager.users.${user} = import ./home/darwin.nix;
           }
           #devenv.darwinModules.default # does not work yet?
@@ -51,7 +55,16 @@
   {
     # NixOS machines
     nixosConfigurations = {
-      Valinor = mkNixos "x86_64-linux" "Valinor" "celebrimbor" [];
+      Valinor = mkNixos "x86_64-linux" "Valinor" "celebrimbor" [
+           {
+             nixpkgs.config = {
+               allowUnfree = true;
+               permittedInsecurePackages = [
+                 "broadcom-sta-6.30.223.271-59-6.18.22"
+               ];
+             };
+           }
+      ];
       server  = mkNixos "x86_64-linux" "server" "" [];
     };
 

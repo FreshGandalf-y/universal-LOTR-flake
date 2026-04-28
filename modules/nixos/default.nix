@@ -3,8 +3,8 @@
 {
   imports = [
     ./podman.nix
-    ./server.nix
     ./desktop.nix
     ./networking.nix
+    ./audio.nix
   ];
 }

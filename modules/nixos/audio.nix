@@ -65,7 +65,7 @@ in
 
     # Audio routing and monitoring
     qjackctl    # Jack patchbay (works with pipewire)
-    helvum      # Native PipeWire patchbay 
+    #helvum      # Native PipeWire patchbay
     qpwgraph    # Qt-based PipeWire graph manager 
 
     # Utilities
@@ -81,4 +81,3 @@ in
   boot.kernelModules = [ "snd-hda-intel" ];
 	hardware.enableAllFirmware = true;
   }
-}
