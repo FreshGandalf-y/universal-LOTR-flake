@@ -7,6 +7,14 @@
     ./packages-casks.nix
   ];
 
+  nixpkgs.overlays = [
+  (_final: prev: {
+    direnv = prev.direnv.overrideAttrs (_: {
+      doCheck = false;
+    });
+  })
+];
+
   modules.darwin = {
     aerospace.enable = true;
     podman.enable = true;
@@ -23,30 +31,7 @@
 
   nixpkgs.config = {
     allowUnfree = true;
-    #problems.handlers = {
-    #  nss_wrapper.broken = "warn"; # or "ignore"
-    #};
-    overlays = [
-      (final: prev: {
-        mailutils = prev.mailutils.override {
-          nss_wrapper = null;
-        };
-      })
-    ];
   };
-
-  nixpkgs.overlays = [
-  (final: prev: {
-    devenv = prev.devenv.overrideAttrs (old: {
-      src = final.fetchFromGitHub {
-        owner = "cachix";
-        repo = "devenv";
-        rev = "v1.3.1";
-        sha256 = "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=";
-      };
-    });
-  })
-];
 
   environment.loginShellInit = ''
     export PATH="$HOME/.config/emacs/bin:$PATH"

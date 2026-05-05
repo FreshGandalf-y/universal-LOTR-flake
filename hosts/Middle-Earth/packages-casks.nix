@@ -38,6 +38,12 @@
         ripgrep
         libtool
 
+        #security
+        bitwarden-desktop
+        yubikey-manager
+        pinentry_mac
+        gnupg
+
         #languages
         rustc
         cargo
@@ -49,7 +55,9 @@
         pnpm
 
         #development environment
-        #direnv # unkommented becouse broken, installed via homebrew
+        #direnv # unkommented becouse broken, installed via homebrew (now with home-manager)
+        #emacsPackages.direnv
+        #devenv
 
         #librarys
         libiconv
@@ -70,10 +78,6 @@
     brews = [
           #frameworks
           "vapor"
-
-          #dev-environment
-          "direnv"
-
         ];
         casks = [
           #editors

@@ -77,7 +77,6 @@
           "1" = "^built-in retina display";
           "2" = [
             "secondary"
-            "2470W"
           ];
         };
       };
